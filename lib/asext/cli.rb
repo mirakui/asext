@@ -24,6 +24,13 @@ module Asext
     class Root < Thor
       desc 'config [COMMAND]', 'Operate launch-configuration'
       subcommand 'config', Config
+
+      desc 'change_ami <as_group> <image_id>', 'Clone launch-configuration and change image_id'
+      def change_ami(as_group, image_id)
+        api = Asext::Api.new
+        dst_conf = api.update_auto_scaling_group_ami as_group, image_id
+        puts "rotated: #{dst_conf}"
+      end
     end
   end
 end
